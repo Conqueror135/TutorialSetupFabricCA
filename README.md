@@ -29,7 +29,7 @@ Sau khi chạy lệnh này xong thì trong folder tls_ca sẽ tự động sinh 
     - operations.listenAddress: Thay đổi số port để dự phòng trong trường hợp có một chương trình khác chạy trên máy này và sử dụng port giống với số port được thiết lập bên trên.
 
     ```
-***Note:*** Trong trường hợp bạn sửa đổi bất kỳ giá trị nào trong khối crs của file fabric-ca-server-conflig.yaml thì bạn cần xóa tls_ca/ca-cert.pem file và toàn bộ tls_ca/msp. Các file này sẽ được tự động sinh lại trong bước tiếp theo.
+    ***Note:*** Trong trường hợp bạn sửa đổi bất kỳ giá trị nào trong khối crs của file fabric-ca-server-conflig.yaml thì bạn cần xóa tls_ca/ca-cert.pem file và toàn bộ tls_ca/msp. Các file này sẽ được tự động sinh lại trong bước tiếp theo.
 
 5. Khởi động máy chủ TLS CA
 Chạy câu lệnh `./fabric-ca-server start` để khởi chạy máy chủ TLS CA
@@ -47,26 +47,26 @@ Chạy câu lệnh `./fabric-ca-server start` để khởi chạy máy chủ TLS
     để đăng ký danh tính quản trị viên bootstrap TLS CA. (thư mục tls-ca)
     • Biết nơi cư trú của chứng chỉ gốc TLS CA cho phép ứng dụng khách Fabric CA giao tiếp với TLS
     Máy chủ CA. (thư mục tls-root-cert)
-6.1. Sao chép tệp chứng chỉ gốc của TLS CA tls_ca/ca-cert.pem, được tạo khi máy chủ TLS CA được khởi động, sang ca_client/tls-root-cert /tls-ca-cert.pem. Lưu ý rằng tên tệp được thay đổi thành tls-ca-cert.pem để làm rõ đây là chứng chỉ gốc từ TLS CA. ***Note***: Chứng chỉ gốc TLS CA này sẽ cần có sẵn trên mỗi hệ thống sử dụng fabric-ca-client  để tương tác với server TLS CA
+    6.1. Sao chép tệp chứng chỉ gốc của TLS CA tls_ca/ca-cert.pem, được tạo khi máy chủ TLS CA được khởi động, sang ca_client/tls-root-cert /tls-ca-cert.pem. Lưu ý rằng tên tệp được thay đổi thành tls-ca-cert.pem để làm rõ đây là chứng chỉ gốc từ TLS CA. ***Note***: Chứng chỉ gốc TLS CA này sẽ cần có sẵn trên mỗi hệ thống sử dụng fabric-ca-client  để tương tác với server TLS CA
 
-6.2. Máy khách Fabric CA cũng cần biết tệp nhị phân máy khách Fabric CA nằm ở đâu. Biến môi trường FABRIC_CA_CLIENT_HOME được sử dụng để đặt vị trí.
-`export FABRIC_CA_CLIENT_HOME=<FULLY-QUALIFIED-PATH-TO-FABRIC-CA-BINARY>`
-Nếu đang ở thư mục chứa file binary fabric-ca-client tức là thư mục ca_client trong hướng dẫn này thì sử dụng câu lệnh `export FABRIC_CA_CLIENT_HOME=$PWD`
+    6.2. Máy khách Fabric CA cũng cần biết tệp nhị phân máy khách Fabric CA nằm ở đâu. Biến môi trường FABRIC_CA_CLIENT_HOME được sử dụng để đặt vị trí: `export FABRIC_CA_CLIENT_HOME=<FULLY-QUALIFIED-PATH-TO-FABRIC-CA-BINARY>`
 
-6.3. Sử dụng CLI ứng dụng khách Fabric CA để đăng ký danh tính quản trị viên bootstrap TLS CA. Chạy lệnh:
-```
- ./fabric-ca-client enroll -d -u https://<ADMIN>:<ADMIN-PWD>@<CA-URL>:<PORT> --tls.certfiles <RELATIVE-PATH-TO-TLS-CERT> --enrollment.profile tls --mspdir tls-ca/tlsadmin/msp
-    Thay thế:
-    • <ADMIN> - với quản trị viên TLS CA được chỉ định trên lệnh init.
-    • <ADMIN-PWD> - với mật khẩu quản trị TLS CA được chỉ định trong lệnh init.
-    • <CA-URL> - với tên máy chủ được chỉ định trong phần csr của tệp .yaml cấu hình TLS CA.
-    • <PORT> - với cổng mà TLS CA đang nghe.
-    • <RELATIVE-PATH-TO-TLS-CERT> - với đường dẫn và tên của tệp chứng chỉ TLS gốc mà bạn đã sao chép từ TLS CA của mình. Đường dẫn này có liên quan đến FABRIC_CA_CLIENT_HOME. Nếu bạn đang làm theo cấu trúc thư mục trong hướng dẫn này, nó sẽ là tls-root-cert/tls-ca-cert.pem.
- ```
- ***Ví dụ câu lệnh chạy trong hướng dẫn này:***
- ```
-  ./fabric-ca-client enroll -d -u https://admintls:admintlspw@sword.com:6666 --tls.certfiles tls-root-cert/tls-ca-cert.pem --enrollment.profile tls --mspdir tls-ca/tlsadmin/msp
- ```
+    Nếu đang ở thư mục chứa file binary fabric-ca-client tức là thư mục ca_client trong hướng dẫn này thì sử dụng câu lệnh: `export FABRIC_CA_CLIENT_HOME=$PWD`
+
+    6.3. Sử dụng CLI ứng dụng khách Fabric CA để đăng ký danh tính quản trị viên bootstrap TLS CA. Chạy lệnh:
+    ```
+    ./fabric-ca-client enroll -d -u https://<ADMIN>:<ADMIN-PWD>@<CA-URL>:<PORT> --tls.certfiles <RELATIVE-PATH-TO-TLS-CERT> --enrollment.profile tls --mspdir tls-ca/tlsadmin/msp
+        Thay thế:
+        • <ADMIN> - với quản trị viên TLS CA được chỉ định trên lệnh init.
+        • <ADMIN-PWD> - với mật khẩu quản trị TLS CA được chỉ định trong lệnh init.
+        • <CA-URL> - với tên máy chủ được chỉ định trong phần csr của tệp .yaml cấu hình TLS CA.
+        • <PORT> - với cổng mà TLS CA đang nghe.
+        • <RELATIVE-PATH-TO-TLS-CERT> - với đường dẫn và tên của tệp chứng chỉ TLS gốc mà bạn đã sao chép từ TLS CA của mình. Đường dẫn này có liên quan đến FABRIC_CA_CLIENT_HOME. Nếu bạn đang làm theo cấu trúc thư mục trong hướng dẫn này, nó sẽ là tls-root-cert/tls-ca-cert.pem.
+    ```
+    ***Ví dụ câu lệnh chạy trong hướng dẫn này:***
+    ```
+    ./fabric-ca-client enroll -d -u https://admintls:admintlspw@sword.com:6666 --tls.certfiles tls-root-cert/tls-ca-cert.pem --enrollment.profile tls --mspdir tls-ca/tlsadmin/msp
+    ```
 
 
  7. Đăng ký danh tính TLS cho CA của một tổ chức 
