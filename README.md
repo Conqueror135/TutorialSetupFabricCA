@@ -3,9 +3,11 @@
 **Chuẩn bị:**
 -	Tải các file binary fabric-ca-server, fabric-ca-client từ Hyperledger fabric về máy.
 -	Các thành phần cần cài đặt:
-    • TLS CA
-    • Organization CA
-    • fabric-ca-Client
+```
+    • TLS CA :  CA cung cấp định danh cho TLS.
+    • Organization CA: CA cung cấp định danh cho các thành viên của một tổ chức.
+    • fabric-ca-Client: Dùng để tương tác với các CA.
+```
 ### I. Cài đặt TLS CA
 1.	Tạo một folder để chứa các file: trong hướng dẫn này sẽ là tls_ca
 2.	Copy file fabric-ca-server vào thư mục mới tạo
@@ -61,7 +63,7 @@ Nếu đang ở thư mục chứa file binary fabric-ca-client tức là thư m�
     • <PORT> - với cổng mà TLS CA đang nghe.
     • <RELATIVE-PATH-TO-TLS-CERT> - với đường dẫn và tên của tệp chứng chỉ TLS gốc mà bạn đã sao chép từ TLS CA của mình. Đường dẫn này có liên quan đến FABRIC_CA_CLIENT_HOME. Nếu bạn đang làm theo cấu trúc thư mục trong hướng dẫn này, nó sẽ là tls-root-cert/tls-ca-cert.pem.
  ```
- Ví dụ câu lệnh chạy trong hướng dẫn này:
+ ***Ví dụ câu lệnh chạy trong hướng dẫn này:***
  ```
   ./fabric-ca-client enroll -d -u https://admintls:admintlspw@sword.com:6666 --tls.certfiles tls-root-cert/tls-ca-cert.pem --enrollment.profile tls --mspdir tls-ca/tlsadmin/msp
  ```
@@ -69,7 +71,7 @@ Nếu đang ở thư mục chứa file binary fabric-ca-client tức là thư m�
 
  7. Đăng ký danh tính TLS cho CA của một tổ chức 
 
- Máy chủ TLS CA được khởi động với danh tính quản trị viên bootstrap (admintls) có đầy đủ đặc quyền quản trị viên cho máy chủ. Một trong những khả năng chính của quản trị viên là khả năng đăng ký danh tính mới. Mỗi nút trong tổ chức (người đặt hàng, đồng nghiệp, CA tổ chức) sẽ giao dịch trên mạng cần phải được đăng ký với TLS CA, để sau đó mỗi nút có thể đăng ký để nhận chứng chỉ TLS của chúng. Do đó, trước khi thiết lập CA tổ chức, chúng ta cần sử dụng TLS CA để đăng ký và đăng ký danh tính bootstrap CA của tổ chức để lấy chứng chỉ TLS và khóa riêng tư của tổ chức đó. Người dùng quản trị bootstrap CA của tổ chức sẽ được đặt tên là orgcaadmin trong bước tiếp theo, do đó chúng tôi sẽ tạo danh tính TLS cho CA tổ chức bằng cách sử dụng cùng tên. Lệnh sau đăng ký danh tính bootstrap CA của tổ chức orgcaadmin với mật khẩu orgcaadminpw với TLS CA.
+ Máy chủ TLS CA được khởi động với danh tính quản trị viên bootstrap (admintls) có đầy đủ đặc quyền quản trị viên cho máy chủ. Một trong những khả năng chính của quản trị viên là khả năng đăng ký danh tính mới. Mỗi nút trong tổ chức (người đặt hàng, đồng nghiệp, CA tổ chức) sẽ giao dịch trên mạng cần phải được đăng ký với TLS CA, để sau đó mỗi nút có thể đăng ký để nhận chứng chỉ TLS của chúng. Do đó, trước khi thiết lập CA tổ chức, chúng ta cần sử dụng TLS CA để đăng ký và đăng ký danh tính bootstrap CA của tổ chức để lấy chứng chỉ TLS và khóa riêng tư của tổ chức đó. Người dùng quản trị bootstrap CA của tổ chức sẽ được đặt tên là orgcaadmin trong bước tiếp theo, do đó chúng tôi sẽ tạo danh tính TLS cho CA tổ chức bằng cách sử dụng cùng tên. Lệnh sau đăng ký danh tính bootstrap CA của tổ chức admin_ca_org1 với mật khẩu admin_ca_org1_pw với TLS CA.
 
 - Tạo một folder trong ca_client/tls-ca/ để lưu trữ danh tính TLS cho tổ chức CA muốn đăng ký. Trong hướng dẫn này thì nó là org1-ca.
 
@@ -111,7 +113,7 @@ Nếu đang ở thư mục chứa file binary fabric-ca-client tức là thư m�
 **Note:** Để tiện cho việc thực hiện ở bước tám thì khóa bí mật được tạo ra trong /tls-ca/org1_ca_admin/msp/keystore/ sẽ được đổi tên thành key.pem
 
 8. Xây dựng một CA cung cấp danh tính cho tổ chức
-Ở bước này ta sẽ giả định tạo CA cho một tổ chức có tên là Org1
+***Ở bước này ta sẽ giả định tạo CA cho một tổ chức có tên là Org1***
 - Tạo một folder cùng cấp với folder ca_client để chứa chương trình, ở ví dụ này thì đó là ca_org1
 - Sao chép file binary fabric-ca-server vào folder này.
 - Chạy câu lệnh sau để khởi tạo server cho CA:
@@ -121,7 +123,7 @@ Nếu đang ở thư mục chứa file binary fabric-ca-client tức là thư m�
         - <ADMIN_USER>: Thiết lập tài khoản cho admin của tổ chức CA
         - <ADMIN_PWD>: Mật khẩu cho tài khoản này
     ```
-    Trong ví dụ này ta sẽ cài đặt tài khoản của admin là adminorg1 và mật khẩu là adminorg1pw, câu lệnh sẽ như sau:
+    ***Trong ví dụ này ta sẽ cài đặt tài khoản của admin là adminorg1 và mật khẩu là adminorg1pw, câu lệnh sẽ như sau:***
     `./fabric-ca-server init -b adminorg1:adminorg1pw`
 
 - Sau khi chạy câu lệnh trên thì những file và thư mục cần thiết cho việc khởi tạo server CA đã được tự động sinh ra. Ở đây ta cần chú ý đến file fabric-ca-server-config.yaml và cần chỉnh sửa tối thiểu những thông tin cần thiết cho file này như sau:
@@ -156,7 +158,7 @@ Nếu đang ở thư mục chứa file binary fabric-ca-client tức là thư m�
     • <RELATIVE-PATH-TO-SAVE-MSP> - đường dẫn đến vị trí bạn định lưu msp cho tài khoản admin.
     Trong trường hợp này, tham số -d chạy máy khách ở chế độ DEBUG, rất hữu ích để gỡ lỗi lệnh.
   ```
-Trong hướng dẫn này thì câu lệnh sẽ như sau:
+***Trong hướng dẫn này thì câu lệnh sẽ như sau:**
 ```
 ./fabric-ca-client enroll -d -u https://adminorg1:adminorg1pw@sword:9998 --tls.certfiles tls-root-cert/tls-ca-cert.pem --mspdir org1-ca/admin/msp
 ```
@@ -180,7 +182,7 @@ Trong hướng dẫn này thì câu lệnh sẽ như sau:
     
     • TLSCERT: Đường dẫn gốc đến chứng chỉ đã ký gốc TLS CA của bạn (được tạo khi tạo TLSCA).
  ```
- Câu lệnh sử dụng trong hướng dẫn này để đăng ký một định danh cho một admin:
+ ***Câu lệnh sử dụng trong hướng dẫn này để đăng ký một định danh cho một admin:******
  ```
     ./fabric-ca-client register -d --id.name org1user --id.secret org1userpw -u https://sword:9998 --mspdir ./org1-ca/admin/msp --id.type admin --tls.certfiles tls-root-cert/tls-ca-cert.pem --csr.hosts 'sword'
  ```
@@ -199,7 +201,7 @@ Trong hướng dẫn này thì câu lệnh sẽ như sau:
     • TLS_CERT: Đường dẫn tương đối đến chứng chỉ gốc TLS CA đã ký của TLS CA được liên kết với tổ chức này.
 
  ```
- Trong hướng dẫn này thì câu lệnh sẽ như sau:
+ ***Trong hướng dẫn này thì câu lệnh sẽ như sau:***
  ```
   ./fabric-ca-client enroll -u https://org1user:org1userpw@sword:9998 --mspdir ./org1/msp --csr.hosts 'sword' --tls.certfiles tls-root-cert/tls-ca-cert.pem
  ```
