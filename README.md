@@ -69,7 +69,9 @@ Chạy câu lệnh `./fabric-ca-server start` để khởi chạy máy chủ TLS
     ```
 
 
- 7. Đăng ký danh tính TLS cho CA của một tổ chức 
+ ### II. Xây dựng một Organization CA
+
+1. Đăng ký định danh TLS cho Organization CA
 
     Máy chủ TLS CA được khởi động với danh tính quản trị viên bootstrap (admintls) có đầy đủ đặc quyền quản trị viên cho máy chủ. Một trong những khả năng chính của quản trị viên là khả năng đăng ký danh tính mới. Mỗi nút trong tổ chức (người đặt hàng, đồng nghiệp, CA tổ chức) sẽ giao dịch trên mạng cần phải được đăng ký với TLS CA, để sau đó mỗi nút có thể đăng ký để nhận chứng chỉ TLS của chúng. Do đó, trước khi thiết lập CA tổ chức, chúng ta cần sử dụng TLS CA để đăng ký và đăng ký danh tính bootstrap CA của tổ chức để lấy chứng chỉ TLS và khóa riêng tư của tổ chức đó. Người dùng quản trị bootstrap CA của tổ chức sẽ được đặt tên là orgcaadmin trong bước tiếp theo, do đó chúng tôi sẽ tạo danh tính TLS cho CA tổ chức bằng cách sử dụng cùng tên. Lệnh sau đăng ký danh tính bootstrap CA của tổ chức admin_ca_org1 với mật khẩu admin_ca_org1_pw với TLS CA.
 
@@ -112,7 +114,7 @@ Chạy câu lệnh `./fabric-ca-server start` để khởi chạy máy chủ TLS
         ```
     **Note:** Để tiện cho việc thực hiện ở bước tám thì khóa bí mật được tạo ra trong /tls-ca/org1_ca_admin/msp/keystore/ sẽ được đổi tên thành key.pem
 
-8. Xây dựng một CA cung cấp danh tính cho tổ chức
+2. Khởi tạo CA
 
     ***Ở bước này ta sẽ giả định tạo CA cho một tổ chức có tên là Org1***
     - Tạo một folder cùng cấp với folder ca_client để chứa chương trình, ở ví dụ này thì đó là ca_org1
@@ -144,7 +146,7 @@ Chạy câu lệnh `./fabric-ca-server start` để khởi chạy máy chủ TLS
 
     ***=> Vậy là ta đã cài đặt xong CA cho một tổ chức, ở bước tiếp theo ta sẽ đăng ký tài khoản admin cho tổ chức CA mới tạo này và thực hiện đăng ký định danh cho một người dùng thuộc tổ chức.**
 
-9. Enroll tài khoản admin và đăng ký danh tính người dùng cho tổ chức CA vừa tạo
+3. Enroll tài khoản admin và đăng ký danh tính người dùng cho tổ chức CA vừa tạo
     
     - Enroll tài khoản admin của tổ chức CA
     ```
