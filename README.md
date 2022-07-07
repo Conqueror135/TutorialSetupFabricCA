@@ -71,46 +71,46 @@ Chạy câu lệnh `./fabric-ca-server start` để khởi chạy máy chủ TLS
 
  7. Đăng ký danh tính TLS cho CA của một tổ chức 
 
- Máy chủ TLS CA được khởi động với danh tính quản trị viên bootstrap (admintls) có đầy đủ đặc quyền quản trị viên cho máy chủ. Một trong những khả năng chính của quản trị viên là khả năng đăng ký danh tính mới. Mỗi nút trong tổ chức (người đặt hàng, đồng nghiệp, CA tổ chức) sẽ giao dịch trên mạng cần phải được đăng ký với TLS CA, để sau đó mỗi nút có thể đăng ký để nhận chứng chỉ TLS của chúng. Do đó, trước khi thiết lập CA tổ chức, chúng ta cần sử dụng TLS CA để đăng ký và đăng ký danh tính bootstrap CA của tổ chức để lấy chứng chỉ TLS và khóa riêng tư của tổ chức đó. Người dùng quản trị bootstrap CA của tổ chức sẽ được đặt tên là orgcaadmin trong bước tiếp theo, do đó chúng tôi sẽ tạo danh tính TLS cho CA tổ chức bằng cách sử dụng cùng tên. Lệnh sau đăng ký danh tính bootstrap CA của tổ chức admin_ca_org1 với mật khẩu admin_ca_org1_pw với TLS CA.
+    Máy chủ TLS CA được khởi động với danh tính quản trị viên bootstrap (admintls) có đầy đủ đặc quyền quản trị viên cho máy chủ. Một trong những khả năng chính của quản trị viên là khả năng đăng ký danh tính mới. Mỗi nút trong tổ chức (người đặt hàng, đồng nghiệp, CA tổ chức) sẽ giao dịch trên mạng cần phải được đăng ký với TLS CA, để sau đó mỗi nút có thể đăng ký để nhận chứng chỉ TLS của chúng. Do đó, trước khi thiết lập CA tổ chức, chúng ta cần sử dụng TLS CA để đăng ký và đăng ký danh tính bootstrap CA của tổ chức để lấy chứng chỉ TLS và khóa riêng tư của tổ chức đó. Người dùng quản trị bootstrap CA của tổ chức sẽ được đặt tên là orgcaadmin trong bước tiếp theo, do đó chúng tôi sẽ tạo danh tính TLS cho CA tổ chức bằng cách sử dụng cùng tên. Lệnh sau đăng ký danh tính bootstrap CA của tổ chức admin_ca_org1 với mật khẩu admin_ca_org1_pw với TLS CA.
 
-- Tạo một folder trong ca_client/tls-ca/ để lưu trữ danh tính TLS cho tổ chức CA muốn đăng ký. Trong hướng dẫn này thì nó là org1-ca.
+    - Tạo một folder trong ca_client/tls-ca/ để lưu trữ danh tính TLS cho tổ chức CA muốn đăng ký. Trong hướng dẫn này thì nó là org1-ca.
 
-***Register một tổ chức ca bằng câu lệnh:***
-```
- ./fabric-ca-client register -d --id.name <ADMIN_ORG_CA> --id.secret <ADMIN_ORG_CA_PW> -u https://<ADMIN>:<ADMIN-PWD>@<CA-URL>:<PORT> --tls.certfiles <RELATIVE-PATH-TO-TLS-CERT> --mspdir tls-ca/tlsadmin/msp
-
-     Thay thế:
-    • <ADMIN_ORG_CA> - Usename quản trị viên tổ chức CA muốn đăng ký.
-    • <ADMIN_ORG_CA_PW> - Mật khẩu quản trị viên tổ chức CA muốn đăng ký.
-    • <ADMIN> - Usename quản trị viên TLS CA.
-    • <ADMIN-PWD> - Mật khẩu quản trị TLS CA .
-    • <CA-URL> - với tên máy chủ được chỉ định trong phần csr của tệp .yaml cấu hình TLS CA.
-    • <PORT> - với cổng mà TLS CA đang nghe.
-    • <RELATIVE-PATH-TO-TLS-CERT> - với đường dẫn và tên của tệp chứng chỉ TLS gốc mà bạn đã sao chép từ TLS CA của mình. Đường dẫn này có liên quan đến FABRIC_CA_CLIENT_HOME. Nếu bạn đang làm theo cấu trúc thư mục trong hướng dẫn này, nó sẽ là tls-root-cert/tls-ca-cert.pem.
-```
-***Ví dụ trong hướng dẫn này câu lệnh đăng ký danh tính TLS cho tổ chức CA có tên org1:***
-```
- ./fabric-ca-client register -d --id.name admin_ca_org1 --id.secret admin_ca_org1_pw -u https://sword:6666 --tls.certfiles tls-root-cert/tls-ca-cert.pem --mspdir tls-ca/tlsadmin/msp
-```
-***Enroll tổ chức CA***
-```
- ./fabric-ca-client enroll -d -u https://<ADMIN_ORG_CA>: <ADMIN_ORG_CA_PW>@ <CA-URL>:<PORT> --tls.certfiles <RELATIVE-PATH-TO-TLS-CERT> --enrollment.profile tls --csr.hosts '<LIST_URL_IN_ORG_CA' --mspdir <RELATIVE-PATH-TO-SAVE-TLS-CERT>
-      Thay thế:
-    • <ADMIN_ORG_CA> - Usename quản trị viên tổ chức CA muốn đăng ký.
-    • <ADMIN_ORG_CA_PW> - Mật khẩu quản trị viên tổ chức CA muốn đăng ký.
-    • <ADMIN> - Usename quản trị viên TLS CA.
-    • <ADMIN-PWD> - Mật khẩu quản trị TLS CA .
-    • <CA-URL> - với tên máy chủ được chỉ định trong phần csr của tệp .yaml cấu hình TLS CA.
-    • <PORT> - với cổng mà TLS CA đang nghe.
-    • <LIST_URL_IN_ORG_CA - Danh sách các url sử dụng trong tổ chức CA
-    • <RELATIVE-PATH-TO-TLS-CERT> - với đường dẫn và tên của tệp chứng chỉ TLS gốc mà bạn đã sao chép từ TLS CA của mình. Đường dẫn này có liên quan đến FABRIC_CA_CLIENT_HOME. Nếu bạn đang làm theo cấu trúc thư mục trong hướng dẫn này, nó sẽ là tls-root-cert/tls-ca-cert.pem.
-    • <RELATIVE-PATH-TO-SAVE-TLS-CERT> - đường dẫn tạo thư mục lưu chứng chỉ định danh được TLS CA cấp cho tổ chức CA đăng ký. Ở trong ví dụ này thì nó là 
-```
-***Enroll tổ chức CA vừa register***
+    ***Register một tổ chức ca bằng câu lệnh:***
     ```
-    ./fabric-ca-client enroll -d -u https://admin_ca_org1:admin_ca_org1_pw@sword:6666 --tls.certfiles tls-root-cert/tls-ca-cert.pem --csr.hosts 'sword, localhost' --mspdir tls-ca/org1_ca_admin/msp
+    ./fabric-ca-client register -d --id.name <ADMIN_ORG_CA> --id.secret <ADMIN_ORG_CA_PW> -u https://<ADMIN>:<ADMIN-PWD>@<CA-URL>:<PORT> --tls.certfiles <RELATIVE-PATH-TO-TLS-CERT> --mspdir tls-ca/tlsadmin/msp
+
+        Thay thế:
+        • <ADMIN_ORG_CA> - Usename quản trị viên tổ chức CA muốn đăng ký.
+        • <ADMIN_ORG_CA_PW> - Mật khẩu quản trị viên tổ chức CA muốn đăng ký.
+        • <ADMIN> - Usename quản trị viên TLS CA.
+        • <ADMIN-PWD> - Mật khẩu quản trị TLS CA .
+        • <CA-URL> - với tên máy chủ được chỉ định trong phần csr của tệp .yaml cấu hình TLS CA.
+        • <PORT> - với cổng mà TLS CA đang nghe.
+        • <RELATIVE-PATH-TO-TLS-CERT> - với đường dẫn và tên của tệp chứng chỉ TLS gốc mà bạn đã sao chép từ TLS CA của mình. Đường dẫn này có liên quan đến FABRIC_CA_CLIENT_HOME. Nếu bạn đang làm theo cấu trúc thư mục trong hướng dẫn này, nó sẽ là tls-root-cert/tls-ca-cert.pem.
     ```
-**Note:** Để tiện cho việc thực hiện ở bước tám thì khóa bí mật được tạo ra trong /tls-ca/org1_ca_admin/msp/keystore/ sẽ được đổi tên thành key.pem
+    ***Ví dụ trong hướng dẫn này câu lệnh đăng ký danh tính TLS cho tổ chức CA có tên org1:***
+    ```
+    ./fabric-ca-client register -d --id.name admin_ca_org1 --id.secret admin_ca_org1_pw -u https://sword:6666 --tls.certfiles tls-root-cert/tls-ca-cert.pem --mspdir tls-ca/tlsadmin/msp
+    ```
+    ***Enroll tổ chức CA***
+    ```
+    ./fabric-ca-client enroll -d -u https://<ADMIN_ORG_CA>: <ADMIN_ORG_CA_PW>@ <CA-URL>:<PORT> --tls.certfiles <RELATIVE-PATH-TO-TLS-CERT> --enrollment.profile tls --csr.hosts '<LIST_URL_IN_ORG_CA' --mspdir <RELATIVE-PATH-TO-SAVE-TLS-CERT>
+        Thay thế:
+        • <ADMIN_ORG_CA> - Usename quản trị viên tổ chức CA muốn đăng ký.
+        • <ADMIN_ORG_CA_PW> - Mật khẩu quản trị viên tổ chức CA muốn đăng ký.
+        • <ADMIN> - Usename quản trị viên TLS CA.
+        • <ADMIN-PWD> - Mật khẩu quản trị TLS CA .
+        • <CA-URL> - với tên máy chủ được chỉ định trong phần csr của tệp .yaml cấu hình TLS CA.
+        • <PORT> - với cổng mà TLS CA đang nghe.
+        • <LIST_URL_IN_ORG_CA - Danh sách các url sử dụng trong tổ chức CA
+        • <RELATIVE-PATH-TO-TLS-CERT> - với đường dẫn và tên của tệp chứng chỉ TLS gốc mà bạn đã sao chép từ TLS CA của mình. Đường dẫn này có liên quan đến FABRIC_CA_CLIENT_HOME. Nếu bạn đang làm theo cấu trúc thư mục trong hướng dẫn này, nó sẽ là tls-root-cert/tls-ca-cert.pem.
+        • <RELATIVE-PATH-TO-SAVE-TLS-CERT> - đường dẫn tạo thư mục lưu chứng chỉ định danh được TLS CA cấp cho tổ chức CA đăng ký. Ở trong ví dụ này thì nó là 
+    ```
+    ***Enroll tổ chức CA vừa register***
+        ```
+        ./fabric-ca-client enroll -d -u https://admin_ca_org1:admin_ca_org1_pw@sword:6666 --tls.certfiles tls-root-cert/tls-ca-cert.pem --csr.hosts 'sword, localhost' --mspdir tls-ca/org1_ca_admin/msp
+        ```
+    **Note:** Để tiện cho việc thực hiện ở bước tám thì khóa bí mật được tạo ra trong /tls-ca/org1_ca_admin/msp/keystore/ sẽ được đổi tên thành key.pem
 
 8. Xây dựng một CA cung cấp danh tính cho tổ chức
 
