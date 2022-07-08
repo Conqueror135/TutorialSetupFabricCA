@@ -29,15 +29,13 @@
         - [3.3.2.1. Register định danh cho một người dùng trong tổ chức](#3321-register-định-danh-cho-một-người-dùng-trong-tổ-chức)
         - [3.3.2.2. Enroll định danh cho một người dùng trong tổ chức](#3322-enroll-định-danh-cho-một-người-dùng-trong-tổ-chức)
 
-[IV. Hướng dẫn cho việc chạy thử CA mẫu được tạo của hướng dẫn](#iv-hướng-dẫn-cho-việc-chạy-thử-ca-mẫu-được-tạo-của-hướng-dẫn)
-
 ===============================================
 
 
 ## I. Công cụ yêu cầu và các lưu ý:
 - Go 1.10+ 
 - Biến môi trường GOPATH được đặt chính xác
-- gói libtool và libtdhl-dev được cài đặt
+- Gói libtool và libtdhl-dev được cài đặt
 ```bash
 #Cài đặt libtool trên Ubuntu:
 
@@ -413,13 +411,3 @@ Trong đó:
 ./fabric-ca-client enroll -u https://org1user:org1userpw@localhost:9998 --mspdir ./org1/msp --csr.hosts 'localhost' --tls.certfiles tls-root-cert/tls-ca-cert.pem
 ```
 ***=> Vậy là ta đã hoàn thành việc cấp phát danh tính cho một người dùng trong tổ chức.***
-
-## IV. Hướng dẫn cho việc chạy thử CA mẫu được tạo của hướng dẫn
-
-**Hiện không dùng được**
-
-- Đầu tiên clone repository này về máy.
-- Đối với thử nghiệm tạo thêm một tổ chức CA mới thì trước hết cần vào thư mục tls_ca và chạy câu lệnh `./fabric-ca-server start --address localhost` để khởi động máy chủ TLS CA. Sau đó vào thư mục ca_client và thực hiện việc tạo tổ chức CA mới như hướng dẫn trong [phần III](#iii-xây-dựng-một-organization-ca).
-- Đối với thử nghiệm đối với ca_org1 đã tạo sẳn thì chỉ cần vào thư mục ca_org1 và chạy câu lệnh `./fabric-ca-server start --address localhost` để khởi động máy chủ CA của org1. Sau đó có thể thực hiện việc đăng ký cấp phát danh tính cho một người dùng trong tổ chức org1 như hướng dẫn trong mục [3.3.2](#332-cấp-danh-tính-cho-một-người-dùng-trong-tổ-chức) của phần III.
-
-***Note:*** Trước khi thực hiện các thao tác tương tác với CA qua fabric-ca-client ở thư mục ca_client thì cần phải export biến môi trường FABRIC_CA_CLIENT_HOME như hướng dẫn trong mục [2.6.2](#262-export-biến-môi-trường-cho-fabric-ca-client) của phần II.
