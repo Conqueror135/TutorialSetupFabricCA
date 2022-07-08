@@ -215,12 +215,13 @@ Sửa đổi thông tin ở file fabric-ca-server-conflig.yaml được sinh ra 
     -- tls-ca
     -- tls-root-cert
     ```
-- ***Note:*** Copy file fabric-ca-client từ $GOPATH/bin vào thư mục mới tạo.
 ***Các thư mục này được ứng dụng khách Fabric CA sử dụng để:***
 - Lưu trữ các chứng chỉ được cấp khi lệnh đăng ký máy khách Fabric CA đang chạy trên máy chủ TLS CA
 để đăng ký danh tính quản trị viên bootstrap TLS CA. (thư mục tls-ca)
 - Nơi lưu trữ của chứng chỉ gốc TLS CA cho phép ứng dụng khách Fabric CA giao tiếp với TLS
 Máy chủ CA. (thư mục tls-root-cert)
+
+***Note:*** Copy file fabric-ca-client từ $GOPATH/bin vào thư mục mới tạo.
 
 #### 2.6.1. Chứng chỉ gốc TLS CA
 Sao chép tệp chứng chỉ gốc của TLS CA `tls_ca/ca-cert.pem`, được tạo khi máy chủ TLS CA được khởi động, sang `ca_client/tls-root-cert /tls-ca-cert.pem`. Lưu ý rằng tên tệp được thay đổi thành `tls-ca-cert.pem` để làm rõ đây là chứng chỉ gốc từ TLS CA. 
