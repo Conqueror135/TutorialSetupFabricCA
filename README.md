@@ -172,7 +172,7 @@ Nếu đang ở thư mục chứa file binary fabric-ca-client tức là thư m�
     ./fabric-ca-client enroll -d -u https://admin_ca_org1:admin_ca_org1_pw@sword:6666 --tls.certfiles tls-root-cert/tls-ca-cert.pem --csr.hosts 'sword, localhost' --mspdir tls-ca/org1_ca_admin/msp
     ```
 
-**Note:** Để tiện cho việc thực hiện ở bước tám thì khóa bí mật được tạo ra trong /tls-ca/org1_ca_admin/msp/keystore/ sẽ được đổi tên thành key.pem
+**Note:** Để tiện cho việc thực hiện ở các bước phía sau thì khóa bí mật được tạo ra trong /tls-ca/org1_ca_admin/msp/keystore/ sẽ được đổi tên thành key.pem
 
 
 ### 3.2. Khởi tạo và chạy Organization CA
