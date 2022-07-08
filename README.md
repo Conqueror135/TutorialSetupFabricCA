@@ -29,6 +29,7 @@
         Sau khi chạy lệnh này xong thì trong folder tls_ca sẽ tự động sinh ra các file và folder cần thiết cho quá trình cài đặt.
 
 1.4. Sửa đổi thông tin ở file fabric-ca-server-conflig.yaml được sinh ra ở bước trên trong tls_ca theo ý muốn.
+
     ```
     Tối thiểu nên đổi các trường sau:
     - port: Nhập cổng mà bạn muốn sử dụng cho máy chủ này. Trong hướng dẫn này sử dựng port 6666
@@ -39,6 +40,7 @@
     - operations.listenAddress: Thay đổi số port để dự phòng trong trường hợp có một chương trình khác chạy trên máy này và sử dụng port giống với số port được thiết lập bên trên.
 
     ```
+    
     ***Note:*** Trong trường hợp bạn sửa đổi bất kỳ giá trị nào trong khối crs của file fabric-ca-server-conflig.yaml thì bạn cần xóa tls_ca/ca-cert.pem file và toàn bộ tls_ca/msp. Các file này sẽ được tự động sinh lại trong bước tiếp theo.
 
 1.5. Khởi động máy chủ TLS CA
