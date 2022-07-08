@@ -35,8 +35,20 @@
 
 
 ## I. Công cụ yêu cầu và các lưu ý:
-- Tải các file binary fabric-ca-server, fabric-ca-client từ Hyperledger fabric về máy.
-- Các thành phần cần cài đặt:
+- Go 1.10+ 
+- Biến môi trường GOPATH được đặt chính xác
+- gói libtool và libtdhl-dev được cài đặt
+```
+Cài đặt libtool trên Ubuntu:
+
+sudo apt install libtool libltdl-dev
+```
+- Tải các file binary fabric-ca-server, fabric-ca-client từ Hyperledger fabric về máy trong $GOPATH/bin.
+```
+go get -u github.com/hyperledger/fabric-ca/cmd/...
+```
+
+- Các thành phần cần cài đặt :
 ```
     • TLS CA :  CA cung cấp định danh cho TLS.
     • Organization CA: CA cung cấp định danh cho các thành viên của một tổ chức.
@@ -167,7 +179,7 @@ Flags:
 ### 2.1. Tạo một folder để chứa các file
 - Trong hướng dẫn này sẽ là tls_ca.
 
-### 2.2. Copy file fabric-ca-server vào thư mục mới tạo.
+### 2.2. Copy file fabric-ca-server từ $GOPATH/bin vào thư mục mới tạo.
 
 ### 2.3. Khởi tạo máy chủ TLS CA
 
@@ -203,6 +215,7 @@ Sửa đổi thông tin ở file fabric-ca-server-conflig.yaml được sinh ra 
     -- tls-ca
     -- tls-root-cert
     ```
+- ***Note:*** Copy file fabric-ca-client từ $GOPATH/bin vào thư mục mới tạo.
 ***Các thư mục này được ứng dụng khách Fabric CA sử dụng để:***
 - Lưu trữ các chứng chỉ được cấp khi lệnh đăng ký máy khách Fabric CA đang chạy trên máy chủ TLS CA
 để đăng ký danh tính quản trị viên bootstrap TLS CA. (thư mục tls-ca)
@@ -243,6 +256,8 @@ Nếu đang ở thư mục chứa file binary fabric-ca-client tức là thư m�
 - Sau khi thực hiện xong bước trước thì máy chủ TLS CA được khởi động với danh tính quản trị viên bootstrap (admintls) có đầy đủ đặc quyền quản trị viên cho máy chủ. Một trong những khả năng chính của quản trị viên là khả năng đăng ký danh tính mới. Mỗi nút trong tổ chức (người đặt hàng, đồng nghiệp, CA tổ chức) sẽ giao dịch trên mạng cần phải được đăng ký với TLS CA, để sau đó mỗi nút có thể đăng ký để nhận chứng chỉ TLS của chúng. Do đó, trước khi thiết lập CA tổ chức, chúng ta cần sử dụng TLS CA để đăng ký và đăng ký danh tính bootstrap CA của tổ chức để lấy chứng chỉ TLS và khóa riêng tư của tổ chức đó. Người dùng quản trị bootstrap CA của tổ chức sẽ được đặt tên là admin_ca_org1 trong bước tiếp theo, do đó ta sẽ tạo danh tính TLS cho CA tổ chức bằng cách sử dụng cùng tên. Lệnh sau đăng ký danh tính bootstrap CA của tổ chức admin_ca_org1 với mật khẩu admin_ca_org1_pw với TLS CA.
 
 - Tạo một folder trong ca_client/tls-ca/ để lưu trữ danh tính TLS cho tổ chức CA muốn đăng ký. Trong hướng dẫn này thì nó là org1-ca.
+
+- Copy file fabric-ca-server từ $GOPATH/bin vào thư mục mới tạo.
 
 #### 3.1.1. Register một tổ chức
 ***Register một tổ chức ca bằng câu lệnh:***
@@ -398,6 +413,8 @@ Trong đó:
 ***=> Vậy là ta đã hoàn thành việc cấp phát danh tính cho một người dùng trong tổ chức.***
 
 ## IV. Hướng dẫn cho việc chạy thử CA mẫu được tạo của hướng dẫn
+
+**Hiện không dùng được**
 
 - Đầu tiên clone repository này về máy.
 - Đối với thử nghiệm tạo thêm một tổ chức CA mới thì trước hết cần vào thư mục tls_ca và chạy câu lệnh `./fabric-ca-server start --address localhost` để khởi động máy chủ TLS CA. Sau đó vào thư mục ca_client và thực hiện việc tạo tổ chức CA mới như hướng dẫn trong [phần III](#iii-xây-dựng-một-organization-ca).
