@@ -18,15 +18,18 @@
 
 ```
 ### I. Cài đặt TLS CA
-1.1. Tạo một folder để chứa các file: trong hướng dẫn này sẽ là tls_ca
-1.2. Copy file fabric-ca-server vào thư mục mới tạo
+1.1. Tạo một folder để chứa các file: trong hướng dẫn này sẽ là tls_ca.
+
+1.2. Copy file fabric-ca-server vào thư mục mới tạo.
+
 1.3. Khởi tạo máy chủ TLS CA
-        Trong folder **tls_ca** bật terminal và chạy dòng lệnh: 
-        `./fabric-ca-server init -b <ADMIN_USER>:<ADMIN_PWD>`
-        trong đó `ADMIN_USER` là tài khoản của admin cho tls ca, `ADMIN_PWD` là mật khẩu
-        Ví dụ:
-        `./fabric-ca-server init -b admintls:admintlspw`
-        Sau khi chạy lệnh này xong thì trong folder tls_ca sẽ tự động sinh ra các file và folder cần thiết cho quá trình cài đặt.
+
+    Trong folder **tls_ca** bật terminal và chạy dòng lệnh: 
+    `./fabric-ca-server init -b <ADMIN_USER>:<ADMIN_PWD>`
+    trong đó `ADMIN_USER` là tài khoản của admin cho tls ca, `ADMIN_PWD` là mật khẩu
+    Ví dụ:
+    `./fabric-ca-server init -b admintls:admintlspw`
+    Sau khi chạy lệnh này xong thì trong folder tls_ca sẽ tự động sinh ra các file và folder cần thiết cho quá trình cài đặt.
 
 1.4. Sửa đổi thông tin ở file fabric-ca-server-conflig.yaml được sinh ra ở bước trên trong tls_ca theo ý muốn.
 
@@ -40,7 +43,7 @@
     - operations.listenAddress: Thay đổi số port để dự phòng trong trường hợp có một chương trình khác chạy trên máy này và sử dụng port giống với số port được thiết lập bên trên.
 
     ```
-    
+
     ***Note:*** Trong trường hợp bạn sửa đổi bất kỳ giá trị nào trong khối crs của file fabric-ca-server-conflig.yaml thì bạn cần xóa tls_ca/ca-cert.pem file và toàn bộ tls_ca/msp. Các file này sẽ được tự động sinh lại trong bước tiếp theo.
 
 1.5. Khởi động máy chủ TLS CA
