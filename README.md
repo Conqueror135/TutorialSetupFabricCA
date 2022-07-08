@@ -42,11 +42,12 @@ Chạy câu lệnh `./fabric-ca-server start` để khởi chạy máy chủ TLS
     -- tls-ca
     -- tls-root-cert
     ```
-    Các thư mục này được ứng dụng khách Fabric CA sử dụng để:
-    • Lưu trữ các chứng chỉ được cấp khi lệnh đăng ký máy khách Fabric CA đang chạy trên máy chủ TLS CA
+    ***Các thư mục này được ứng dụng khách Fabric CA sử dụng để:***
+    - Lưu trữ các chứng chỉ được cấp khi lệnh đăng ký máy khách Fabric CA đang chạy trên máy chủ TLS CA
     để đăng ký danh tính quản trị viên bootstrap TLS CA. (thư mục tls-ca)
-    • Biết nơi cư trú của chứng chỉ gốc TLS CA cho phép ứng dụng khách Fabric CA giao tiếp với TLS
+    - Biết nơi cư trú của chứng chỉ gốc TLS CA cho phép ứng dụng khách Fabric CA giao tiếp với TLS
     Máy chủ CA. (thư mục tls-root-cert)
+
     6.1. Sao chép tệp chứng chỉ gốc của TLS CA tls_ca/ca-cert.pem, được tạo khi máy chủ TLS CA được khởi động, sang ca_client/tls-root-cert /tls-ca-cert.pem. Lưu ý rằng tên tệp được thay đổi thành tls-ca-cert.pem để làm rõ đây là chứng chỉ gốc từ TLS CA. ***Note***: Chứng chỉ gốc TLS CA này sẽ cần có sẵn trên mỗi hệ thống sử dụng fabric-ca-client  để tương tác với server TLS CA
 
     6.2. Máy khách Fabric CA cũng cần biết tệp nhị phân máy khách Fabric CA nằm ở đâu. Biến môi trường FABRIC_CA_CLIENT_HOME được sử dụng để đặt vị trí: `export FABRIC_CA_CLIENT_HOME=<FULLY-QUALIFIED-PATH-TO-FABRIC-CA-BINARY>`
@@ -73,7 +74,7 @@ Chạy câu lệnh `./fabric-ca-server start` để khởi chạy máy chủ TLS
 
 1. Đăng ký định danh TLS cho Organization CA
 
-    Máy chủ TLS CA được khởi động với danh tính quản trị viên bootstrap (admintls) có đầy đủ đặc quyền quản trị viên cho máy chủ. Một trong những khả năng chính của quản trị viên là khả năng đăng ký danh tính mới. Mỗi nút trong tổ chức (người đặt hàng, đồng nghiệp, CA tổ chức) sẽ giao dịch trên mạng cần phải được đăng ký với TLS CA, để sau đó mỗi nút có thể đăng ký để nhận chứng chỉ TLS của chúng. Do đó, trước khi thiết lập CA tổ chức, chúng ta cần sử dụng TLS CA để đăng ký và đăng ký danh tính bootstrap CA của tổ chức để lấy chứng chỉ TLS và khóa riêng tư của tổ chức đó. Người dùng quản trị bootstrap CA của tổ chức sẽ được đặt tên là orgcaadmin trong bước tiếp theo, do đó chúng tôi sẽ tạo danh tính TLS cho CA tổ chức bằng cách sử dụng cùng tên. Lệnh sau đăng ký danh tính bootstrap CA của tổ chức admin_ca_org1 với mật khẩu admin_ca_org1_pw với TLS CA.
+    - Máy chủ TLS CA được khởi động với danh tính quản trị viên bootstrap (admintls) có đầy đủ đặc quyền quản trị viên cho máy chủ. Một trong những khả năng chính của quản trị viên là khả năng đăng ký danh tính mới. Mỗi nút trong tổ chức (người đặt hàng, đồng nghiệp, CA tổ chức) sẽ giao dịch trên mạng cần phải được đăng ký với TLS CA, để sau đó mỗi nút có thể đăng ký để nhận chứng chỉ TLS của chúng. Do đó, trước khi thiết lập CA tổ chức, chúng ta cần sử dụng TLS CA để đăng ký và đăng ký danh tính bootstrap CA của tổ chức để lấy chứng chỉ TLS và khóa riêng tư của tổ chức đó. Người dùng quản trị bootstrap CA của tổ chức sẽ được đặt tên là admin_ca_org1 trong bước tiếp theo, do đó ta sẽ tạo danh tính TLS cho CA tổ chức bằng cách sử dụng cùng tên. Lệnh sau đăng ký danh tính bootstrap CA của tổ chức admin_ca_org1 với mật khẩu admin_ca_org1_pw với TLS CA.
 
     - Tạo một folder trong ca_client/tls-ca/ để lưu trữ danh tính TLS cho tổ chức CA muốn đăng ký. Trong hướng dẫn này thì nó là org1-ca.
 
@@ -144,7 +145,7 @@ Chạy câu lệnh `./fabric-ca-server start` để khởi chạy máy chủ TLS
     
         • Sign.profiles.ca.caconstraint.maxpathlen - Trường này đại diện cho số lượng tối đa chứng chỉ trung gian không tự cấp có thể theo sau chứng chỉ này trong chuỗi chứng chỉ. Nếu đây sẽ là máy chủ mẹ cho CA trung gian và bạn muốn CA trung gian đó hoạt động như CA mẹ cho một CA trung gian khác, CA gốc này cần đặt giá trị này lớn hơn 0 trong tệp .yaml cấu hình. Xem hướng dẫn cho phần ký. Giá trị mặc định là 0.
 
-    ***=> Vậy là ta đã cài đặt xong CA cho một tổ chức, ở bước tiếp theo ta sẽ đăng ký tài khoản admin cho tổ chức CA mới tạo này và thực hiện đăng ký định danh cho một người dùng thuộc tổ chức.**
+    ***=> Vậy là ta đã cài đặt xong CA cho một tổ chức, ở bước tiếp theo ta sẽ đăng ký tài khoản admin cho tổ chức CA mới tạo này và thực hiện đăng ký định danh cho một người dùng thuộc tổ chức.***
 
 3. Enroll tài khoản admin và đăng ký danh tính người dùng cho tổ chức CA vừa tạo
     
@@ -161,7 +162,7 @@ Chạy câu lệnh `./fabric-ca-server start` để khởi chạy máy chủ TLS
         • <RELATIVE-PATH-TO-SAVE-MSP> - đường dẫn đến vị trí bạn định lưu msp cho tài khoản admin.
         Trong trường hợp này, tham số -d chạy máy khách ở chế độ DEBUG, rất hữu ích để gỡ lỗi lệnh.
     ```
-    ***Trong hướng dẫn này thì câu lệnh sẽ như sau:**
+    ***Trong hướng dẫn này thì câu lệnh sẽ như sau:***
     ```
     ./fabric-ca-client enroll -d -u https://adminorg1:adminorg1pw@sword:9998 --tls.certfiles tls-root-cert/tls-ca-cert.pem --mspdir org1-ca/admin/msp
     ```
@@ -185,7 +186,7 @@ Chạy câu lệnh `./fabric-ca-server start` để khởi chạy máy chủ TLS
         
         • TLSCERT: Đường dẫn gốc đến chứng chỉ đã ký gốc TLS CA của bạn (được tạo khi tạo TLSCA).
     ```
-    ***Câu lệnh sử dụng trong hướng dẫn này để đăng ký một định danh cho một admin:******
+    ***Câu lệnh sử dụng trong hướng dẫn này để đăng ký một định danh cho một admin:***
     ```
         ./fabric-ca-client register -d --id.name org1user --id.secret org1userpw -u https://sword:9998 --mspdir ./org1-ca/admin/msp --id.type admin --tls.certfiles tls-root-cert/tls-ca-cert.pem --csr.hosts 'sword'
     ```
