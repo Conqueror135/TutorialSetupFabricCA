@@ -43,7 +43,8 @@
 
 sudo apt install libtool libltdl-dev
 ```
-- Tải các file binary fabric-ca-server, fabric-ca-client từ Hyperledger fabric về máy trong $GOPATH/bin.
+- Tải các file binary fabric-ca-server, fabric-ca-client từ Hyperledger fabric về máy, chúng sẽ được tự động lưu trong $GOPATH/bin.
+
 ```bash
 go get -u github.com/hyperledger/fabric-ca/cmd/...
 ```
