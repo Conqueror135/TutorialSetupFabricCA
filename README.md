@@ -287,7 +287,7 @@ Trong đó:
 ## IV. Hướng dẫn cho việc chạy thử CA mẫu được tạo của hướng dẫn
 
 - Đầu tiên clone repository này về máy
-- Đối với thử nghiệm tạo thêm một tổ chức CA mới thì trước hết cần vào thư mục tls_ca và chạy câu lệnh `./fabric-ca-server start` để khởi động máy chủ TLS CA. Sau đó thực hiện việc tạo tổ chức CA mới như hướng dẫn trong [phần III](#iii-xây-dựng-một-organization-ca).
-- Đối với thử nghiệm đối với ca_org1 đã tạo sẳn thì chỉ cần vào thư mục ca_org1 và chạy câu lệnh `./fabric-ca-server start` để khởi động máy chủ CA của org1. Sau đó có thể thực hiện việc đăng ký cấp phát danh tính cho một người dùng trong tổ chức org1 như hướng dẫn trong mục [3.3.2](#332-cấp-danh-tính-cho-một-người-dùng-trong-tổ-chức) của phần II.
+- Đối với thử nghiệm tạo thêm một tổ chức CA mới thì trước hết cần vào thư mục tls_ca và chạy câu lệnh `./fabric-ca-server start` để khởi động máy chủ TLS CA. Sau đó vào thư mục ca_client và thực hiện việc tạo tổ chức CA mới như hướng dẫn trong [phần III](#iii-xây-dựng-một-organization-ca).
+- Đối với thử nghiệm đối với ca_org1 đã tạo sẳn thì chỉ cần vào thư mục ca_org1 và chạy câu lệnh `./fabric-ca-server start` để khởi động máy chủ CA của org1. Sau đó có thể thực hiện việc đăng ký cấp phát danh tính cho một người dùng trong tổ chức org1 như hướng dẫn trong mục [3.3.2](#332-cấp-danh-tính-cho-một-người-dùng-trong-tổ-chức) của phần III.
 
 ***Note:*** Trước khi thực hiện các thao tác tương tác với CA qua fabric-ca-client ở thư mục ca_client thì cần phải export biến môi trường FABRIC_CA_CLIENT_HOME như hướng dẫn trong mục [2.6.2](#262-export-biến-môi-trường-cho-fabric-ca-client) của phần II.
