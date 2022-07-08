@@ -48,7 +48,7 @@
    • Register: Gửi thông tin đăng ký cho CA và CA sẽ trả về một secret.
    • Enroll: Phía người dùng gửi lại secret cho CA xác nhận để hoàn tất quá trình đăng ký.
 
-- Trong hướng dẫn sữ dụng host với tên sword, đây là tên của máy tính chạy thử nghiệm và nó đại diện cho địa chỉ ip 0.0.0.0 và chương trình chạy trên các máy khác nhau thì cần thay đổi tên này tương ứng với máy đó và nó giống với giá trị của crs.hosts trong file fabric-ca-server-conflig.yaml.
+- Trong hướng dẫn sữ dụng host với tên localhost, đây là tên của máy tính chạy thử nghiệm và nó đại diện cho địa chỉ ip 0.0.0.0 và chương trình chạy trên các máy khác nhau thì cần thay đổi tên này tương ứng với máy đó và nó giống với giá trị của crs.hosts trong file fabric-ca-server-conflig.yaml.
 
 ```
 
@@ -82,7 +82,7 @@ Sửa đổi thông tin ở file fabric-ca-server-conflig.yaml được sinh ra 
 ***Note:*** Trong trường hợp bạn sửa đổi bất kỳ giá trị nào trong khối crs của file fabric-ca-server-conflig.yaml thì bạn cần xóa tls_ca/ca-cert.pem file và toàn bộ tls_ca/msp. Các file này sẽ được tự động sinh lại trong bước tiếp theo.
 
 ### 2.5. Khởi động máy chủ TLS CA
-- Chạy câu lệnh `./fabric-ca-server start` để khởi chạy máy chủ TLS CA
+- Chạy câu lệnh `./fabric-ca-server start --address localhost` để khởi chạy máy chủ TLS CA 
 
 ### 2.6. Đăng ký identity cho admin TLS CA
 - Sử dụng fabric-ca-client để đăng ký.
@@ -122,7 +122,7 @@ Nếu đang ở thư mục chứa file binary fabric-ca-client tức là thư m�
 ```
 ***Ví dụ câu lệnh chạy trong hướng dẫn này:***
 ```
-./fabric-ca-client enroll -d -u https://admintls:admintlspw@sword:6666 --tls.certfiles tls-root-cert/tls-ca-cert.pem --enrollment.profile tls --mspdir tls-ca/tlsadmin/msp
+./fabric-ca-client enroll -d -u https://admintls:admintlspw@localhost:6666 --tls.certfiles tls-root-cert/tls-ca-cert.pem --enrollment.profile tls --mspdir tls-ca/tlsadmin/msp
 ```
 
 ## III. Xây dựng một Organization CA
@@ -149,7 +149,7 @@ Nếu đang ở thư mục chứa file binary fabric-ca-client tức là thư m�
 ```
 ***Ví dụ trong hướng dẫn này câu lệnh đăng ký danh tính TLS cho tổ chức CA có tên org1:***
 ```
-./fabric-ca-client register -d --id.name admin_ca_org1 --id.secret admin_ca_org1_pw -u https://sword:6666 --tls.certfiles tls-root-cert/tls-ca-cert.pem --mspdir tls-ca/tlsadmin/msp
+./fabric-ca-client register -d --id.name admin_ca_org1 --id.secret admin_ca_org1_pw -u https://localhost:6666 --tls.certfiles tls-root-cert/tls-ca-cert.pem --mspdir tls-ca/tlsadmin/msp
 ```
 
 #### 3.1.2. Enroll tổ chức
@@ -170,7 +170,7 @@ Nếu đang ở thư mục chứa file binary fabric-ca-client tức là thư m�
 ***Enroll tổ chức CA vừa register***
 
 ```
-./fabric-ca-client enroll -d -u https://admin_ca_org1:admin_ca_org1_pw@sword:6666 --tls.certfiles tls-root-cert/tls-ca-cert.pem --csr.hosts 'sword, localhost' --mspdir tls-ca/org1_ca_admin/msp
+./fabric-ca-client enroll -d -u https://admin_ca_org1:admin_ca_org1_pw@localhost:6666 --tls.certfiles tls-root-cert/tls-ca-cert.pem --csr.hosts 'localhost, localhost' --mspdir tls-ca/org1_ca_admin/msp
 
 ```
 
@@ -210,7 +210,7 @@ Nếu đang ở thư mục chứa file binary fabric-ca-client tức là thư m�
     • **Sign.profiles.ca.caconstraint.maxpathlen** - Trường này đại diện cho số lượng tối đa chứng chỉ trung gian không tự cấp có thể theo sau chứng chỉ này trong chuỗi chứng chỉ. Nếu đây sẽ là máy chủ mẹ cho CA trung gian và bạn muốn CA trung gian đó hoạt động như CA mẹ cho một CA trung gian khác, CA gốc này cần đặt giá trị này lớn hơn 0 trong tệp .yaml cấu hình. Xem hướng dẫn cho phần ký. Giá trị mặc định là 0.
 
 #### 3.2.2. Khởi chạy Organization CA
-- Sau khi chỉnh sửa **file .yaml** hoàn tất thì ta có thể chạy câu lệnh `./fabric-ca-server start` để khởi chạy CA.
+- Sau khi chỉnh sửa **file .yaml** hoàn tất thì ta có thể chạy câu lệnh `./fabric-ca-server start --address localhost` để khởi chạy CA.
 
 
 ***=> Vậy là ta đã cài đặt xong và khởi chạy CA cho một tổ chức, ở bước tiếp theo ta sẽ đăng ký tài khoản admin cho tổ chức CA mới tạo này và thực hiện đăng ký định danh cho một người dùng thuộc tổ chức.***
@@ -236,7 +236,7 @@ Thay thế:
 ```
 ***Trong hướng dẫn này thì câu lệnh sẽ như sau:***
 ```
-./fabric-ca-client enroll -d -u https://adminorg1:adminorg1pw@sword:9998 --tls.certfiles tls-root-cert/tls-ca-cert.pem --mspdir org1-ca/admin/msp
+./fabric-ca-client enroll -d -u https://adminorg1:adminorg1pw@localhost:9998 --tls.certfiles tls-root-cert/tls-ca-cert.pem --mspdir org1-ca/admin/msp
 ```
 
 #### 3.3.2. Cấp danh tính cho một người dùng trong tổ chức
@@ -263,7 +263,7 @@ Trong đó:
 ```
 ***Câu lệnh sử dụng trong hướng dẫn này để đăng ký một định danh cho một admin của tổ chức:***
 ```
-./fabric-ca-client register -d --id.name org1user --id.secret org1userpw -u https://sword:9998 --mspdir ./org1-ca/admin/msp --id.type admin --tls.certfiles tls-root-cert/tls-ca-cert.pem --csr.hosts 'sword'
+./fabric-ca-client register -d --id.name org1user --id.secret org1userpw -u https://localhost:9998 --mspdir ./org1-ca/admin/msp --id.type admin --tls.certfiles tls-root-cert/tls-ca-cert.pem --csr.hosts 'localhost'
 ```
 ##### 3.3.2.2. Enroll định danh cho một người dùng trong tổ chức
 - Enroll định danh cho một người dùng trong tổ chức sau khi resgiter thành công:
@@ -282,7 +282,7 @@ Trong đó:
 ```
 ***Trong hướng dẫn này thì câu lệnh sẽ như sau:***
 ```
-./fabric-ca-client enroll -u https://org1user:org1userpw@sword:9998 --mspdir ./org1/msp --csr.hosts 'sword' --tls.certfiles tls-root-cert/tls-ca-cert.pem
+./fabric-ca-client enroll -u https://org1user:org1userpw@localhost:9998 --mspdir ./org1/msp --csr.hosts 'localhost' --tls.certfiles tls-root-cert/tls-ca-cert.pem
 ```
 ***=> Vậy là ta đã hoàn thành việc cấp phát danh tính cho một người dùng trong tổ chức.***
 
@@ -292,7 +292,7 @@ Trong đó:
 
 - Đầu tiên clone repository này về máy.
 - Thay đổi mục crs.hosts trong file fabric-ca-server-conflig.yaml tương ứng với host của máy mình
-- Đối với thử nghiệm tạo thêm một tổ chức CA mới thì trước hết cần vào thư mục tls_ca và chạy câu lệnh `./fabric-ca-server start` để khởi động máy chủ TLS CA. Sau đó vào thư mục ca_client và thực hiện việc tạo tổ chức CA mới như hướng dẫn trong [phần III](#iii-xây-dựng-một-organization-ca).
-- Đối với thử nghiệm đối với ca_org1 đã tạo sẳn thì chỉ cần vào thư mục ca_org1 và chạy câu lệnh `./fabric-ca-server start` để khởi động máy chủ CA của org1. Sau đó có thể thực hiện việc đăng ký cấp phát danh tính cho một người dùng trong tổ chức org1 như hướng dẫn trong mục [3.3.2](#332-cấp-danh-tính-cho-một-người-dùng-trong-tổ-chức) của phần III.
+- Đối với thử nghiệm tạo thêm một tổ chức CA mới thì trước hết cần vào thư mục tls_ca và chạy câu lệnh `./fabric-ca-server start --address localhost` để khởi động máy chủ TLS CA. Sau đó vào thư mục ca_client và thực hiện việc tạo tổ chức CA mới như hướng dẫn trong [phần III](#iii-xây-dựng-một-organization-ca).
+- Đối với thử nghiệm đối với ca_org1 đã tạo sẳn thì chỉ cần vào thư mục ca_org1 và chạy câu lệnh `./fabric-ca-server start --address localhost` để khởi động máy chủ CA của org1. Sau đó có thể thực hiện việc đăng ký cấp phát danh tính cho một người dùng trong tổ chức org1 như hướng dẫn trong mục [3.3.2](#332-cấp-danh-tính-cho-một-người-dùng-trong-tổ-chức) của phần III.
 
 ***Note:*** Trước khi thực hiện các thao tác tương tác với CA qua fabric-ca-client ở thư mục ca_client thì cần phải export biến môi trường FABRIC_CA_CLIENT_HOME như hướng dẫn trong mục [2.6.2](#262-export-biến-môi-trường-cho-fabric-ca-client) của phần II.

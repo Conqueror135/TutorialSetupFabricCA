@@ -319,7 +319,6 @@ csr:
         O: Hyperledger
         OU: Fabric
    hosts:
-     - sword
      - localhost
    ca:
       expiry: 131400h
