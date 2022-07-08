@@ -38,13 +38,13 @@
 - Go 1.10+ 
 - Biến môi trường GOPATH được đặt chính xác
 - gói libtool và libtdhl-dev được cài đặt
-```
-Cài đặt libtool trên Ubuntu:
+```bash
+#Cài đặt libtool trên Ubuntu:
 
 sudo apt install libtool libltdl-dev
 ```
 - Tải các file binary fabric-ca-server, fabric-ca-client từ Hyperledger fabric về máy trong $GOPATH/bin.
-```
+```bash
 go get -u github.com/hyperledger/fabric-ca/cmd/...
 ```
 
