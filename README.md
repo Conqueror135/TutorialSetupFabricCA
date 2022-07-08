@@ -183,10 +183,14 @@ Flags:
 ### 2.3. Khởi tạo máy chủ TLS CA
 
 Trong folder **tls_ca** bật terminal và chạy dòng lệnh: 
-`./fabric-ca-server init -b <ADMIN_USER>:<ADMIN_PWD>`
-trong đó `ADMIN_USER` là tài khoản của admin cho tls ca, `ADMIN_PWD` là mật khẩu
+```bash
+    ./fabric-ca-server init -b <ADMIN_USER>:<ADMIN_PWD>
+Trong đó:
+    - <ADMIN_USER> là tài khoản của admin cho tls ca.
+    - <ADMIN_PWD> là mật khẩu của tài khoản
 Ví dụ:
-`./fabric-ca-server init -b admintls:admintlspw`
+    ./fabric-ca-server init -b admintls:admintlspw
+```
 Sau khi chạy lệnh này xong thì trong folder tls_ca sẽ tự động sinh ra các file và folder cần thiết cho quá trình cài đặt.
 
 ### 2.4. Sửa đổi file fabric-ca-server-conflig.yaml của TLS CA
