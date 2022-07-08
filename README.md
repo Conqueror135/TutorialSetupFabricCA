@@ -48,7 +48,7 @@
    • Register: Gửi thông tin đăng ký cho CA và CA sẽ trả về một secret.
    • Enroll: Phía người dùng gửi lại secret cho CA xác nhận để hoàn tất quá trình đăng ký.
 
-- Trong hướng dẫn sữ dụng host với tên sword, đây là tên của máy tính chạy thử nghiệm và nó đại diện cho địa chỉ ip 0.0.0.0 và chương trình chạy trên các máy khác nhau thì cần thay đổi tên này tương ứng với máy đó.
+- Trong hướng dẫn sữ dụng host với tên sword, đây là tên của máy tính chạy thử nghiệm và nó đại diện cho địa chỉ ip 0.0.0.0 và chương trình chạy trên các máy khác nhau thì cần thay đổi tên này tương ứng với máy đó và nó giống với giá trị của crs.hosts trong file fabric-ca-server-conflig.yaml.
 
 ```
 
@@ -122,7 +122,7 @@ Nếu đang ở thư mục chứa file binary fabric-ca-client tức là thư m�
 ```
 ***Ví dụ câu lệnh chạy trong hướng dẫn này:***
 ```
-./fabric-ca-client enroll -d -u https://admintls:admintlspw@sword.com:6666 --tls.certfiles tls-root-cert/tls-ca-cert.pem --enrollment.profile tls --mspdir tls-ca/tlsadmin/msp
+./fabric-ca-client enroll -d -u https://admintls:admintlspw@sword:6666 --tls.certfiles tls-root-cert/tls-ca-cert.pem --enrollment.profile tls --mspdir tls-ca/tlsadmin/msp
 ```
 
 ## III. Xây dựng một Organization CA
@@ -286,7 +286,10 @@ Trong đó:
 
 ## IV. Hướng dẫn cho việc chạy thử CA mẫu được tạo của hướng dẫn
 
-- Đầu tiên clone repository này về máy
+**Phần này đang lỗi khi chạy trên máy khác do liên quan đến tên host. Thăng ĐZ sửa lại cho nó có thể chạy được trên tất cả các máy, xin chờ trong chốc lát! :)))**
+
+- Đầu tiên clone repository này về máy.
+- Thay đổi mục crs.hosts trong file fabric-ca-server-conflig.yaml tương ứng với host của máy mình
 - Đối với thử nghiệm tạo thêm một tổ chức CA mới thì trước hết cần vào thư mục tls_ca và chạy câu lệnh `./fabric-ca-server start` để khởi động máy chủ TLS CA. Sau đó vào thư mục ca_client và thực hiện việc tạo tổ chức CA mới như hướng dẫn trong [phần III](#iii-xây-dựng-một-organization-ca).
 - Đối với thử nghiệm đối với ca_org1 đã tạo sẳn thì chỉ cần vào thư mục ca_org1 và chạy câu lệnh `./fabric-ca-server start` để khởi động máy chủ CA của org1. Sau đó có thể thực hiện việc đăng ký cấp phát danh tính cho một người dùng trong tổ chức org1 như hướng dẫn trong mục [3.3.2](#332-cấp-danh-tính-cho-một-người-dùng-trong-tổ-chức) của phần III.
 
