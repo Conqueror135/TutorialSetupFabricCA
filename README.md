@@ -184,12 +184,15 @@ Flags:
 
 Trong folder **tls_ca** bật terminal và chạy dòng lệnh: 
 ```bash
-    ./fabric-ca-server init -b <ADMIN_USER>:<ADMIN_PWD>
+./fabric-ca-server init -b <ADMIN_USER>:<ADMIN_PWD>
+
 Trong đó:
     - <ADMIN_USER> là tài khoản của admin cho tls ca.
     - <ADMIN_PWD> là mật khẩu của tài khoản
-Ví dụ:
+
+Ví dụ trong hướng dẫn này thì câu lệnh sẽ là:
     ./fabric-ca-server init -b admintls:admintlspw
+#Note: Không nên đặt mật khẩu toàn là số vì có thể gây ra lỗi không đúng mật khẩu khi đăng nhập.
 ```
 Sau khi chạy lệnh này xong thì trong folder tls_ca sẽ tự động sinh ra các file và folder cần thiết cho quá trình cài đặt.
 
