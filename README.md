@@ -1,8 +1,8 @@
 ## Các bước triển khai cài đặt CA
 
 **Chuẩn bị:**
--	Tải các file binary fabric-ca-server, fabric-ca-client từ Hyperledger fabric về máy.
--	Các thành phần cần cài đặt:
+- Tải các file binary fabric-ca-server, fabric-ca-client từ Hyperledger fabric về máy.
+- Các thành phần cần cài đặt:
 ```
     • TLS CA :  CA cung cấp định danh cho TLS.
     • Organization CA: CA cung cấp định danh cho các thành viên của một tổ chức.
@@ -12,12 +12,13 @@
 1.	Tạo một folder để chứa các file: trong hướng dẫn này sẽ là tls_ca
 2.	Copy file fabric-ca-server vào thư mục mới tạo
 3.	Khởi tạo máy chủ TLS CA
-- Trong folder **tls_ca** bật terminal và chạy dòng lệnh: 
-`./fabric-ca-server init -b <ADMIN_USER>:<ADMIN_PWD>`
-trong đó `ADMIN_USER` là tài khoản của admin cho tls ca, `ADMIN_PWD` là mật khẩu
-Ví dụ:
-`./fabric-ca-server init -b admintls:admintlspw`
-Sau khi chạy lệnh này xong thì trong folder tls_ca sẽ tự động sinh ra các file và folder cần thiết cho quá trình cài đặt.
+    Trong folder **tls_ca** bật terminal và chạy dòng lệnh: 
+    `./fabric-ca-server init -b <ADMIN_USER>:<ADMIN_PWD>`
+    trong đó `ADMIN_USER` là tài khoản của admin cho tls ca, `ADMIN_PWD` là mật khẩu
+    Ví dụ:
+    `./fabric-ca-server init -b admintls:admintlspw`
+    Sau khi chạy lệnh này xong thì trong folder tls_ca sẽ tự động sinh ra các file và folder cần thiết cho quá trình cài đặt.
+
 4. Sửa đổi thông tin ở file fabric-ca-server-conflig.yaml được sinh ra ở bước trên trong tls_ca theo ý muốn.
     ```
     Tối thiểu nên đổi các trường sau:
@@ -32,23 +33,25 @@ Sau khi chạy lệnh này xong thì trong folder tls_ca sẽ tự động sinh 
     ***Note:*** Trong trường hợp bạn sửa đổi bất kỳ giá trị nào trong khối crs của file fabric-ca-server-conflig.yaml thì bạn cần xóa tls_ca/ca-cert.pem file và toàn bộ tls_ca/msp. Các file này sẽ được tự động sinh lại trong bước tiếp theo.
 
 5. Khởi động máy chủ TLS CA
-Chạy câu lệnh `./fabric-ca-server start` để khởi chạy máy chủ TLS CA
+    Chạy câu lệnh `./fabric-ca-server start` để khởi chạy máy chủ TLS CA
 
 6. Đăng ký identity cho admin TLS CA
-- Sử dụng fabric-ca-client để đăng ký.
-- Tạo một folder để lưu trữ chương trình cho fabric-ca-client, trong hướng dẫn này tên ca_client được sử dụng và cấu trúc của nó như sau:
-    ```
-    ca_client
-    -- tls-ca
-    -- tls-root-cert
-    ```
+    - Sử dụng fabric-ca-client để đăng ký.
+    - Tạo một folder để lưu trữ chương trình cho fabric-ca-client, trong hướng dẫn này tên ca_client được sử dụng và cấu trúc của nó như sau:
+        ```
+        ca_client
+        -- tls-ca
+        -- tls-root-cert
+        ```
     ***Các thư mục này được ứng dụng khách Fabric CA sử dụng để:***
     - Lưu trữ các chứng chỉ được cấp khi lệnh đăng ký máy khách Fabric CA đang chạy trên máy chủ TLS CA
     để đăng ký danh tính quản trị viên bootstrap TLS CA. (thư mục tls-ca)
-    - Biết nơi cư trú của chứng chỉ gốc TLS CA cho phép ứng dụng khách Fabric CA giao tiếp với TLS
+    - Nơi lưu trữ của chứng chỉ gốc TLS CA cho phép ứng dụng khách Fabric CA giao tiếp với TLS
     Máy chủ CA. (thư mục tls-root-cert)
 
-    6.1. Sao chép tệp chứng chỉ gốc của TLS CA tls_ca/ca-cert.pem, được tạo khi máy chủ TLS CA được khởi động, sang ca_client/tls-root-cert /tls-ca-cert.pem. Lưu ý rằng tên tệp được thay đổi thành tls-ca-cert.pem để làm rõ đây là chứng chỉ gốc từ TLS CA. ***Note***: Chứng chỉ gốc TLS CA này sẽ cần có sẵn trên mỗi hệ thống sử dụng fabric-ca-client  để tương tác với server TLS CA
+    6.1. Sao chép tệp chứng chỉ gốc của TLS CA tls_ca/ca-cert.pem, được tạo khi máy chủ TLS CA được khởi động, sang ca_client/tls-root-cert /tls-ca-cert.pem. Lưu ý rằng tên tệp được thay đổi thành tls-ca-cert.pem để làm rõ đây là chứng chỉ gốc từ TLS CA. 
+    
+    ***Note***: Chứng chỉ gốc TLS CA này sẽ cần có sẵn trên mỗi hệ thống sử dụng fabric-ca-client  để tương tác với server TLS CA
 
     6.2. Máy khách Fabric CA cũng cần biết tệp nhị phân máy khách Fabric CA nằm ở đâu. Biến môi trường FABRIC_CA_CLIENT_HOME được sử dụng để đặt vị trí: `export FABRIC_CA_CLIENT_HOME=<FULLY-QUALIFIED-PATH-TO-FABRIC-CA-BINARY>`
 
@@ -131,6 +134,7 @@ Chạy câu lệnh `./fabric-ca-server start` để khởi chạy máy chủ TLS
         `./fabric-ca-server init -b adminorg1:adminorg1pw`
 
     - Sau khi chạy câu lệnh trên thì những file và thư mục cần thiết cho việc khởi tạo server CA đã được tự động sinh ra. Ở đây ta cần chú ý đến file fabric-ca-server-config.yaml và cần chỉnh sửa tối thiểu những thông tin cần thiết cho file này như sau:
+    
         • port - Nhập cổng mà bạn muốn sử dụng cho máy chủ này. Trong hướng dẫn này sử dụng 9998, nhưng bạn có thể chọn port của mình.
     
         • tls.enabled - Bật TLS bằng cách đặt giá trị này thành true.
